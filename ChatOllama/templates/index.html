@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Chat</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <form action="/novo" method="post">
+            <button>+ Novo chat</button>
+        </form>
+
+        {% for c in chats %}
+            <a href="/chat/{{c.id}}">
+                {{ c.titulo if c.titulo else "Chat " ~ c.id }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- CHAT -->
+    <div class="chat">
+
+        {% if chat_id %}
+
+            <div class="mensagens">
+                {% for m in mensagens %}
+                    <div class="msg user">{{m.pergunta}}</div>
+                    <div class="msg ia">{{m.resposta}}</div>
+                {% endfor %}
+            </div>
+
+            <form method="post" action="/chat/{{chat_id}}" class="form">
+                <input type="text" name="pergunta" placeholder="Digite..." required>
+                <button>Enviar</button>
+            </form>
+
+        {% else %}
+            <h2 style="margin:auto">Crie ou selecione um chat</h2>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
