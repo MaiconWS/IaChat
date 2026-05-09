@@ -7,13 +7,15 @@
 </head>
 
 <body>
+<!-- HEADER -->
 
 <div class="layout">
-
     <!-- SIDEBAR -->
     <div class="sidebar">
         <form action="/novo" method="post">
-            <button>+ Novo chat</button>
+            <img class="icon" src="{{ url_for('static', filename='../static/image/chatbot.png') }}" alt="Novo chat">
+            <br>
+            <button> Novo chat</button>
         </form>
 
         {% for c in chats %}
@@ -22,7 +24,7 @@
             </a>
         {% endfor %}
     </div>
-
+    
     <!-- CHAT -->
     <div class="chat">
 
