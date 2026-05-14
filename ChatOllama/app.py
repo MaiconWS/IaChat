@@ -4,7 +4,7 @@ from db import get_db, init_db
 
 app = Flask(__name__)
 
-MODEL_NAME = "llama3.2:3b"
+MODEL_NAME = "llama3.2:3b" # defina o modelo que deseja usar (verifique os modelos disponíveis com `ollama list` no terminal)
 
 # inicializa banco
 init_db()
@@ -13,10 +13,10 @@ init_db()
 # ROTAS
 # ======================
 
-@app.route("/")
+@app.route("/") #pagina inicial
 def home():
     conn = get_db()
-    try:
+    try: #Faz busca dos chats existentes
         chats = conn.execute("SELECT * FROM chats ORDER BY id DESC").fetchall()
     finally:
         conn.close()
@@ -24,7 +24,7 @@ def home():
     return render_template("index.html", chats=chats, mensagens=[], chat_id=None)
 
 
-@app.route("/novo", methods=["POST"])
+@app.route("/novo", methods=["POST"]) # cria novo chat e redireciona para a página do chat criado
 def novo_chat():
     conn = get_db()
     try:
@@ -38,11 +38,11 @@ def novo_chat():
 
 
 @app.route("/chat/<int:chat_id>", methods=["GET", "POST"])
-def chat_view(chat_id):
+def chat_view(chat_id): # exibe mensagens e processa novas perguntas no chat selecionado
     conn = get_db()
 
     try:
-        if request.method == "POST":
+        if request.method == "POST": # processa nova pergunta
             pergunta = request.form.get("pergunta", "").strip()
 
             if not pergunta:

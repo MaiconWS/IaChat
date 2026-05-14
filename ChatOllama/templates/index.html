@@ -20,7 +20,7 @@
 
         {% for c in chats %}
             <a href="/chat/{{c.id}}">
-                {{ c.titulo if c.titulo else "Chat " ~ c.id }}
+                {{ c.titulo if c.titulo else "Chat " ~ c.id }} <!--Se existir título, mostre o título senão, mostre 'Chat + id'-->
             </a>
         {% endfor %}
     </div>
@@ -31,7 +31,7 @@
         {% if chat_id %}
 
             <div class="mensagens">
-                {% for m in mensagens %}
+                {% for m in mensagens %} <!--Para cada mensagem dentro da lista mensagens, execute esse bloco-->
                     <div class="msg user">{{m.pergunta}}</div>
                     <div class="msg ia">{{m.resposta}}</div>
                 {% endfor %}
