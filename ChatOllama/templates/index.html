@@ -32,8 +32,8 @@
 
             <div class="mensagens">
                 {% for m in mensagens %} <!--Para cada mensagem dentro da lista mensagens, execute esse bloco-->
-                    <div class="msg user">{{m.pergunta}}</div>
-                    <div class="msg ia">{{m.resposta}}</div>
+                    <div class="msg user">{{m.pergunta}}</div> <!--Parte 2: Captura da pergunta-->
+                    <div class="msg ia">{{m.resposta}}</div> <!--Parte 6: Exibe a resposta da IA-->
                 {% endfor %}
             </div>
 

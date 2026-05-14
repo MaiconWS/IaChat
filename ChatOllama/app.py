@@ -42,8 +42,8 @@ def chat_view(chat_id): # exibe mensagens e processa novas perguntas no chat sel
     conn = get_db()
 
     try:
-        if request.method == "POST": # processa nova pergunta
-            pergunta = request.form.get("pergunta", "").strip()
+        if request.method == "POST": # Parte 1: processa nova pergunta
+            pergunta = request.form.get("pergunta", "").strip() # Parte 2: Captura da pergunta
 
             if not pergunta:
                 return redirect(f"/chat/{chat_id}")
@@ -64,7 +64,7 @@ def chat_view(chat_id): # exibe mensagens e processa novas perguntas no chat sel
             messages.append({"role": "user", "content": pergunta})
 
             try:
-                resultado = chat(
+                resultado = chat( #parte 3: gera resposta usando modelo Ollama
                     model=MODEL_NAME,
                     messages=messages,
                     think=False
@@ -73,7 +73,7 @@ def chat_view(chat_id): # exibe mensagens e processa novas perguntas no chat sel
             except Exception:
                 resposta = "Erro ao gerar resposta da IA."
 
-            # salva mensagem
+            # parte 4: salva mensagem
             conn.execute(
                 "INSERT INTO mensagens (chat_id, pergunta, resposta) VALUES (?, ?, ?)",
                 (chat_id, pergunta, resposta)
@@ -100,7 +100,7 @@ def chat_view(chat_id): # exibe mensagens e processa novas perguntas no chat sel
 
             return redirect(f"/chat/{chat_id}")
 
-        # GET (carrega mensagens)
+        # Parte 5:GET (carrega mensagens)
         mensagens = conn.execute(
             "SELECT * FROM mensagens WHERE chat_id = ?",
             (chat_id,)
